@@ -18,12 +18,11 @@ var ArticleSchema = new Schema({
   },
   // `link` is required and of type String
   author: {
-    type: String,
-    required: true
+    type: String
   },
   // `link` is required and of type String
   date: {
-    type: String,
+    type: Date,
     required: true
   },
   // `comment` is an object that stores a Comment id

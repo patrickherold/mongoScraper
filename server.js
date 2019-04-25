@@ -60,7 +60,8 @@ app.get("/scrape", function(req, res) {
       result.link = $(this).find("a").attr("href");
       result.title = $(this).find("a").find("b").text();
       result.author = $(this).find("a").find(".author").text();
-      result.date = $(this).find("a").find(".date").text();
+      result.date = $(this).find("a").find(".date").text().slice(7);
+      result.date = new Date(result.date);
 
       // Save these results in an object that we'll push into the results array we defined earlier
 
@@ -78,14 +79,31 @@ app.get("/scrape", function(req, res) {
     });
 
     // Send a message to the client
-    res.redirect("/");
+    res.redirect('/');
   });
 });
+
+
+
+// A GET route for scraping the echoJS website
+app.get("/clear", function(req, res) {
+
+  db.Article.deleteMany()
+    .then(function(dbArticle) {
+      // View the added result in the console
+      res.redirect('/');
+    })
+    .catch(function(err) {
+      // If an error occurred, log it
+      console.log(err);
+    });
+});
+
 
 // Route for getting all Articles from the db
 app.get("/articles", function(req, res) {
   // Grab every document in the Articles collection
-  db.Article.find({})
+  db.Article.find({}).sort({date: 'desc'})
     .then(function(dbArticle) {
       // If we were able to successfully find Articles, send them back to the client
       res.json(dbArticle);

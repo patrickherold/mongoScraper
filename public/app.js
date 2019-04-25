@@ -1,22 +1,24 @@
 // Grab the articles as a json
 $.getJSON("/articles", function(data) {
   // For each one
+  console.log("Data from /articles ", data.length)
   for (var i = 0; i < data.length; i++) {
+    var date = new Date(data[i].date)
     // Display the apropos information on the page
     $("#articles").append("<div class='card' data-id='" + data[i]._id + "'><div class='card-body'>" + 
       "<h5 class='card-title'>" + data[i].title + "</h5><div class='card-text'>" + 
       "<h6 class='card-subtitle mb-2 text-muted'>" + data[i].author + "</h6>" +
-      "<h6 class='card-subtitle mb-2 text-muted'>" + data[i].date + "</h6>" +
+      "<h6 class='card-subtitle mb-2 text-muted'>" + (date.getMonth() + 1) + "/" + (date.getDate()) + "</h6>" +
       "<a href='" + data[i].link + "' class='card-link' target='_blank' style='float: right'>Visit Story</a><div class='addNote' data-id='" 
       + data[i]._id + "' data-toggle='modal' data-target='#exampleModal' data-whatever='" + data[i].title + "' class='addNote'>Add Note</div></div></div>"
       );
-  }
+  };
 });
 
 
 
 // Whenever someone clicks a p tag
-$(document).on("click", ".save", function() {
+$(document).on("click", ".card", function() {
   console.log("====================> Here");
 
 
@@ -48,6 +50,9 @@ $(document).on("click", ".save", function() {
         $("#commentTitle").val(data.comment.title);
         // Place the body of the note in the body textarea
         $("#commentBody").val(data.comment.body);
+
+        $("#notes").append("<h2>" + data.title + "</h2>");
+
       }
 
 
@@ -93,10 +98,10 @@ $(document).on("click", "#submitComment", function() {
       console.log(data);
       // Empty the notes section
       $("#notes").empty();
+      $('#exampleModal').modal('toggle');
     });
 
   // Also, remove the values entered in the input and textarea for note entry
   $("#commentorName").val("");
   $("#comment").val("");
-  res.redirect("/");
 });
