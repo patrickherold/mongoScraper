@@ -13,8 +13,6 @@ var cheerio = require("cheerio");
 // Require all models
 var db = require("./models");
 
-var PORT = 3000;
-
 // Initialize Express
 var app = express();
 
@@ -41,6 +39,9 @@ var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/scraper";
 
 mongoose.connect(MONGODB_URI, { useNewUrlParser: true });
 // Routes
+
+// get the heroku port
+var PORT = server.listen(process.env.PORT || 3000);
 
 app.get('/', function (req, res) {
   res.render('home');
