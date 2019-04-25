@@ -39,7 +39,7 @@ app.use(express.static("public"));
 // Connect to the Mongo DB
 var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/scraper";
 
-mongoose.connect("mongodb://heroku_cbjx56zp:f096u71reqm6uh77v50mbit6bs@ds147436.mlab.com:47436/heroku_cbjx56zp");
+mongoose.connect("mongodb://heroku_cbjx56zp:f096u71reqm6uh77v50mbit6bs@ds147436.mlab.com:47436/heroku_cbjx56zp", { useNewUrlParser: true });
 // Routes
 
 app.get('/', function (req, res) {
