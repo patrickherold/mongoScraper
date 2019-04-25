@@ -41,7 +41,7 @@ mongoose.connect(MONGODB_URI, { useNewUrlParser: true });
 // Routes
 
 // get the heroku port
-var PORT = server.listen(process.env.PORT || 3000);
+var PORT = process.env.PORT || 3000;
 
 app.get('/', function (req, res) {
   res.render('home');
